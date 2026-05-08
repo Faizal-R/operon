@@ -3,13 +3,16 @@ import { env } from "../env/env";
 export const appConfig = {
   name: "Operon",
 
-  env: env?.NODE_ENV,
+  env: env.NODE_ENV,
 
-  port: env?.PORT,
+  port: env.PORT,
 
-  apiPrefix: env?.API_PREFIX || "/api",
+  frontendUrl:
+    env.NODE_ENV === "production" ? env.FRONTEND_URL : "http://localhost:3000",
 
-  isProduction: env?.NODE_ENV === "production",
+  apiPrefix: env.API_PREFIX,
 
-  isDevelopment: env?.NODE_ENV === "development",
+  isProduction: env.NODE_ENV === "production",
+
+  isDevelopment: env.NODE_ENV === "development",
 };

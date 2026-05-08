@@ -1,7 +1,5 @@
 import "dotenv/config";
 
-import { envSchema } from "./schema";
+import { Env, validateEnv } from "./schema";
 
-const parsed = envSchema.safeParse(process.env);
-
-export const env = parsed.data!;
+export const env: Env = validateEnv(process.env);

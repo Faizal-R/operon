@@ -1,56 +1,57 @@
 import { z } from "zod";
 
 export const envSchema = z.object({
-  NODE_ENV: z.enum(["development", "production", "test"]),
+  NODE_ENV: z
+    .enum(["development", "production", "test"])
+    .refine((val) => val !== undefined, {
+      message: "NODE_ENV is required",
+    }),
 
   PORT: z.coerce.number().default(7000),
 
   API_PREFIX: z.string().default("/api"),
 
-  FRONTEND_URL: z.string(),
+  FRONTEND_URL: z.string().min(1, { message: "FRONTEND_URL is required" }),
 
-  PRISMA_URI: z.string(),
+  POSTGRES_URL: z.string().min(1, { message: "POSTGRES_URL is required" }),
 
-  MONGODB_URI: z.string(),
+  MONGODB_URI: z.string().min(1, { message: "MONGODB_URI is required" }),
 
-  REDIS_URL: z.string(),
+  REDIS_URL: z.string().min(1, { message: "REDIS_URL is required" }),
 
-//   KAFKA_BROKERS: z.string(),
+  // KAFKA_BROKERS: z.string().min(1, { message: "KAFKA_BROKERS is required" }),
 
-  JWT_ACCESS_SECRET: z.string(),
+  JWT_ACCESS_SECRET: z
+    .string()
+    .min(1, { message: "JWT_ACCESS_SECRET is required" }),
 
-  JWT_REFRESH_SECRET: z.string(),
+  JWT_REFRESH_SECRET: z
+    .string()
+    .min(1, { message: "JWT_REFRESH_SECRET is required" }),
 
   JWT_ACCESS_EXPIRES_IN: z.string().default("15m"),
 
   JWT_REFRESH_EXPIRES_IN: z.string().default("7d"),
 
-  LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug"]).default("info"),
+  LOG_LEVEL: z
+    .enum(["fatal", "error", "warn", "info", "debug"])
+    .refine((val) => val !== undefined, {
+      message: "LOG_LEVEL is required",
+    })
+    .default("info"),
 });
-// export const envSchema = z.object({
-//   NODE_ENV: z.enum(["development", "production", "test"]),
 
-//   PORT: z.coerce.number().default(7000),
+export type Env = z.infer<typeof envSchema>;
 
-//   API_PREFIX: z.string().default("/api"),
+export function validateEnv(env: Record<string, unknown>) {
+  const result = envSchema.safeParse(env);
 
-//   FRONTEND_URL: z.string(),
+  if (!result.success) {
+    result.error.issues.forEach((err) => {
+      console.error(`❌ ${err.path.join(".")}: ${err.message}`);
+    });
+    process.exit(1);
+  }
 
-//   PRISMA_URI: z.string(),
-
-//   MONGODB_URI: z.string(),
-
-//   REDIS_URL: z.string(),
-
-//   KAFKA_BROKERS: z.string(),
-
-//   JWT_ACCESS_SECRET: z.string(),
-
-//   JWT_REFRESH_SECRET: z.string(),
-
-//   JWT_ACCESS_EXPIRES_IN: z.string().default("15m"),
-
-//   JWT_REFRESH_EXPIRES_IN: z.string().default("7d"),
-
-//   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug"]).default("info"),
-// });
+  return result.data;
+}
