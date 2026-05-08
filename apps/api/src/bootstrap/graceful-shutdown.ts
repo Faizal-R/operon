@@ -5,6 +5,7 @@ import { Server } from "http";
 // import { redis } from "@/infrastructure/redis/redis";
 
 import { logger } from "@/infrastructure/observability/logging";
+import { disconnectMongo } from "@/infrastructure/database/mongodb/mongoose";
 
 export function setupGracefulShutdown(server: Server) {
   async function shutdown(signal: string) {
@@ -14,6 +15,7 @@ export function setupGracefulShutdown(server: Server) {
       //   await prisma.$disconnect();
 
       //   redis.disconnect();
+      await disconnectMongo();
 
       logger.info("Graceful shutdown completed");
 

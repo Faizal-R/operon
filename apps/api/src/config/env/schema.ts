@@ -1,12 +1,6 @@
 import { z } from "zod";
 
 export const envSchema = z.object({
-  NODE_ENV: z
-    .enum(["development", "production", "test"])
-    .refine((val) => val !== undefined, {
-      message: "NODE_ENV is required",
-    }),
-
   PORT: z.coerce.number().default(7000),
 
   API_PREFIX: z.string().default("/api"),
@@ -33,11 +27,10 @@ export const envSchema = z.object({
 
   JWT_REFRESH_EXPIRES_IN: z.string().default("7d"),
 
+  NODE_ENV: z.enum(["development", "production", "test"]),
+
   LOG_LEVEL: z
     .enum(["fatal", "error", "warn", "info", "debug"])
-    .refine((val) => val !== undefined, {
-      message: "LOG_LEVEL is required",
-    })
     .default("info"),
 });
 

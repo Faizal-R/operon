@@ -9,3 +9,11 @@ export async function connectMongo() {
     process.exit(1);
   }
 }
+
+export async function disconnectMongo() {
+  try {
+    await mongoose.disconnect();
+  } catch (error) {
+    process.exit(1);
+  }
+}
