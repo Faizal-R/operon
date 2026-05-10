@@ -1,18 +1,17 @@
 import { Server } from "http";
 
-// import { prisma } from "@/infrastructure/database/postgres/prisma";
-
 // import { redis } from "@/infrastructure/redis/redis";
 
 import { logger } from "@/infrastructure/observability/logging";
 import { disconnectMongo } from "@/infrastructure/database/mongodb/mongoose";
+import { prisma } from "@/infrastructure/database/postgres/prisma/prisma";
 
 export function setupGracefulShutdown(server: Server) {
   async function shutdown(signal: string) {
     logger.warn(`Received ${signal}`);
 
     server.close(async () => {
-      //   await prisma.$disconnect();
+      await prisma.$disconnect();
 
       //   redis.disconnect();
       await disconnectMongo();

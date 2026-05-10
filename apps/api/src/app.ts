@@ -9,6 +9,8 @@ import compression from "compression";
 import cookieParser from "cookie-parser";
 
 import { appConfig } from "@/config/app/app.config";
+import { createResponse } from "./shared/utils/response-handler";
+import { statusCodes } from "./shared/constants/status-codes";
 
 export const app: express.Application = express();
 
@@ -39,7 +41,8 @@ app.use(
 );
 
 app.get("/health", (_, res) => {
-  res.status(200).json({
-    status: "ok",
+  createResponse(res, statusCodes.OK, true, "API is healthy", {
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
   });
 });

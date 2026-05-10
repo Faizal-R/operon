@@ -17,7 +17,7 @@ import { setupGracefulShutdown } from "./graceful-shutdown";
 export async function bootstrapServer() {
   try {
     // Initialize infrastructure
-    // await bootstrapDatabase();
+    await bootstrapDatabase();
 
     // Register middleware
     bootstrapMiddlewares(app);
@@ -35,7 +35,6 @@ export async function bootstrapServer() {
       logger.info(
         {
           port: appConfig.port,
-          env: appConfig.env,
         },
         `${appConfig.name} server started`,
       );

@@ -1,0 +1,20 @@
+/* src/app/theme.css */
+@theme inline {
+  /* Dynamic mappings sourced from layout.tsx Root styles injected by theme.ts */
+  --color-operon-bg: var(--theme-color-bg);
+  --color-operon-bg-alt: var(--theme-color-bg-alt);
+  --color-operon-accent: var(--theme-color-accent);
+  --color-operon-accent-dark: var(--theme-color-accent-dark);
+  --color-operon-accent-glow: var(--theme-color-accent-glow);
+  --color-operon-card: var(--theme-color-card);
+  --color-operon-card-hover: var(--theme-color-card-hover);
+  --color-operon-border: var(--theme-color-border);
+  --color-operon-border-bright: var(--theme-color-border-bright);
+  --color-operon-text: var(--theme-color-text);
+  --color-operon-muted: var(--theme-color-muted);
+}
+
+:root {
+  /* Internal defaults just in case JS fails */
+  --theme-glass-blur: blur(16px);
+}
