@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: ./apps/api
+    container_name: operon-api
+    ports:
+      - "7000:7000"
+    env-file:
+      - ./apps/api/.env
+
+  mongo:
+    image: mongo:latest
+    container_name: operon-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: operon
+      MONGO_INITDB_ROOT_PASSWORD: operon-password-local
+
+  postgres:
+    image: postgres:latest
+    container_name: operon-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: operon
+      POSTGRES_PASSWORD: operon-password-local
+      POSTGRES_DB: operon
