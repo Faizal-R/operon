@@ -12,7 +12,7 @@ export const envSchema = z.object({
   MONGODB_URI: z.string().min(1, { message: "MONGODB_URI is required" }),
 
   REDIS_URL: z.string().min(1, { message: "REDIS_URL is required" }),
-  DATABASE_URL: z.string().min(1, { message: "DATABASE_URL is required" }),
+  // DATABASE_URL: z.string().min(1, { message: "DATABASE_URL is required" }),
   // KAFKA_BROKERS: z.string().min(1, { message: "KAFKA_BROKERS is required" }),
   SUPABASE_URL: z.string().min(1, { message: "SUPABASE_URL is required" }),
   SUPABASE_SERVICE_ROLE_KEY: z
