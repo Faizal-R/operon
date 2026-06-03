@@ -8,7 +8,10 @@ import { logger } from "@/infrastructure/observability/logging";
 
 import { bootstrapDatabase } from "./database";
 
-import { bootstrapMiddlewares } from "./middlewares";
+import {
+  bootstrapPreRoutesMiddlewares,
+  bootstrapPostRoutesMiddlewares,
+} from "./middlewares";
 
 import { bootstrapRoutes } from "./routes";
 
@@ -19,11 +22,14 @@ export async function bootstrapServer() {
     // Initialize infrastructure
     await bootstrapDatabase();
 
-    // Register middleware
-    bootstrapMiddlewares(app);
+    // Register pre-route middleware
+    bootstrapPreRoutesMiddlewares(app);
 
     // Register routes
     bootstrapRoutes(app);
+
+    // Register post-route middleware (error handler)
+    bootstrapPostRoutesMiddlewares(app);
 
     const server = http.createServer(app);
 

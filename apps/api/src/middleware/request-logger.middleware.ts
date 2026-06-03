@@ -17,5 +17,13 @@ export const requestLoggerMiddleware = pinoHttp({
         url: req.url,
       };
     },
+    res(res) {
+      const body = (res as any).responseBody;
+      return {
+        statusCode: res.statusCode,
+        ...(body ? { body } : {}),
+      };
+    },
+    err: () => undefined,
   },
 });

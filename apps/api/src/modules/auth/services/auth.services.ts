@@ -26,6 +26,14 @@ export class AuthService implements IAuthService {
     const githubId =
       user.identities?.find((i) => i.provider === "github")?.id || user.id;
 
+    const existingUser = await this._userRepository.findByEmail(user.email!);
+    if (existingUser) {
+      authLogger.info("User already exists, successfully signed in", {
+        userId: existingUser.id,
+      });
+      return existingUser;
+    }
+
     authLogger.info("Creating local user representation", { githubId });
 
     const newUser = await this._userRepository.create({

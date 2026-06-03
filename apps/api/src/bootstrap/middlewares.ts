@@ -6,10 +6,12 @@ import { requestLoggerMiddleware } from "@/middleware/request-logger.middleware"
 
 import { errorHandlerMiddleware } from "@/middleware/error-handler.middleware";
 
-export function bootstrapMiddlewares(app: Application) {
+export function bootstrapPreRoutesMiddlewares(app: Application) {
   app.use(requestIdMiddleware);
 
   app.use(requestLoggerMiddleware);
+}
 
+export function bootstrapPostRoutesMiddlewares(app: Application) {
   app.use(errorHandlerMiddleware);
 }
