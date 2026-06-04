@@ -1,3 +1,4 @@
+import { registerAuthModule } from "./bindings/binding";
 import authRoutes from "./routes/auth.routes";
 
 export const authModule = {
@@ -8,4 +9,6 @@ export const authModule = {
   path: "/auth",
 
   router: authRoutes,
+
+  register: registerAuthModule,
 };

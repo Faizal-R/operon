@@ -1,15 +1,14 @@
 import { Router } from "express";
-import { AuthController } from "../controllers/auth.controller";
-import { AuthService } from "../services/auth.services";
-import { UserRepository } from "../../user/repositories/user.repository";
 import { asyncHandler } from "../../../shared/utils/async-handler";
-import { prisma } from "@/infrastructure/database/postgres/prisma/prisma";
+import { TYPES } from "@/infrastructure/container/inversify.types";
+import { IAuthController } from "../controllers/interfaces/auth.controller.interface";
+import { resolveContainer } from "@/infrastructure/container/inversify.config";
 
 const router: Router = Router();
 
-const userRepository = new UserRepository(prisma);
-const authService = new AuthService(userRepository);
-const authController = new AuthController(authService);
+const authController = resolveContainer<IAuthController>(
+  TYPES.CONTROLLERS.AuthController,
+);
 
 router.post("/github", asyncHandler(authController.signGithub));
 

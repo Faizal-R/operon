@@ -1,6 +1,8 @@
 import { PrismaClient } from "./generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { postgresConfig } from "@/config/database/postgres.config";
+import { Container } from "inversify";
+import { TYPES } from "@/infrastructure/container/inversify.types";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -17,3 +19,7 @@ if (isProduction) {
 const adapter = new PrismaPg(adapterOptions);
 
 export const prisma = new PrismaClient({ adapter });
+
+export const registerPrismaClient = (container: Container) => {
+  container.bind(TYPES.DATABASE.PrismaClient).toConstantValue(prisma);
+};

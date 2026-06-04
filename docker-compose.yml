@@ -28,3 +28,10 @@ services:
       POSTGRES_USER: operon
       POSTGRES_PASSWORD: operon-password-local
       POSTGRES_DB: operon
+
+  redis:
+    image: redis:7-alpine
+    container_name: operon-redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]

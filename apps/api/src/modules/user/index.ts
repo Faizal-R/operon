@@ -1,4 +1,12 @@
-export * from "./controllers/user.controller";
-export * from "./services/user.service";
-export * from "./repositories/user.repository";
-export { default as userRoutes } from "./routes/user.routes";
+import { registerUserModuleBindings } from "./bindings/binding";
+import userRoutes from "./routes/user.routes";
+
+export const userModule = {
+  name: "user",
+
+  version: "v1",
+  path: "/users",
+
+  router: userRoutes,
+  register: registerUserModuleBindings,
+};

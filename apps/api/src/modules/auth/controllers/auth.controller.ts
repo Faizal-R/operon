@@ -4,9 +4,15 @@ import { IAuthService } from "../services/interfaces/auth.service.interface";
 import { createResponse } from "../../../shared/utils/response-handler";
 import { statusCodes } from "../../../shared/constants/status-codes";
 import { authLogger } from "../logger/auth.logger";
+import { TYPES } from "@/infrastructure/container/inversify.types";
+import { inject, injectable } from "inversify";
 
+@injectable()
 export class AuthController implements IAuthController {
-  constructor(private readonly _authService: IAuthService) {}
+  constructor(
+    @inject(TYPES.SERVICES.AuthService)
+    private readonly _authService: IAuthService,
+  ) {}
 
   signGithub = async (req: Request, res: Response): Promise<void> => {
     authLogger.info("Handling signGithub request");

@@ -4,9 +4,15 @@ import { supabase } from "../config/supabase";
 import { ApiError } from "@/shared/utils/custom-error";
 import { statusCodes } from "@/shared/constants/status-codes";
 import { authLogger } from "../logger/auth.logger";
+import { inject, injectable } from "inversify";
+import { TYPES } from "@/infrastructure/container/inversify.types";
 
+@injectable()
 export class AuthService implements IAuthService {
-  constructor(private readonly _userRepository: IUserRepository) {}
+  constructor(
+    @inject(TYPES.REPOSITORIES.UserRepository)
+    private readonly _userRepository: IUserRepository,
+  ) {}
 
   async signGithub(token: string) {
     authLogger.info("Authenticating Github session token via Supabase");
