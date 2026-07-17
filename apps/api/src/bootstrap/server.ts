@@ -13,19 +13,13 @@ import {
   bootstrapPostRoutesMiddlewares,
 } from "./middlewares";
 
-import { bootstrapRoutes } from "./routes";
-
 import { setupGracefulShutdown } from "./graceful-shutdown";
-import { initializeContainers } from "./container";
-import { container } from "@/infrastructure/container/inversify.config";
+import { bootstrapRoutes } from "./routes";
 
 export async function bootstrapServer() {
   try {
     // Initialize infrastructure
     await bootstrapDatabase();
-
-    // Register Containers
-    initializeContainers(container);
 
     // Register pre-route middleware
     bootstrapPreRoutesMiddlewares(app);

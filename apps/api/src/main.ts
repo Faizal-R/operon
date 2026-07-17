@@ -2,6 +2,12 @@ import "dotenv/config";
 
 import "reflect-metadata";
 
+import "./infrastructure/container/inversify.config";
+
 import { bootstrapServer } from "@/bootstrap/server";
 
-bootstrapServer();
+const startServer = async () => {
+  await bootstrapServer();
+};
+
+startServer();

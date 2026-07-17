@@ -1,4 +1,3 @@
-import { registerUserModuleBindings } from "./bindings/binding";
 import userRoutes from "./routes/user.routes";
 
 export const userModule = {
@@ -8,5 +7,4 @@ export const userModule = {
   path: "/users",
 
   router: userRoutes,
-  register: registerUserModuleBindings,
 };
